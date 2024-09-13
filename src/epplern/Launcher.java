@@ -2,6 +2,9 @@ package epplern;
 
 import com.sun.tools.javac.Main;
 
+/**
+ * This class launches my program.
+ */
 public class Launcher {
     /**
      * This launches the jar file
