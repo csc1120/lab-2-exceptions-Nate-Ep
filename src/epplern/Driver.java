@@ -20,8 +20,6 @@ import java.util.Scanner;
  * The graph shows the frequency of each number rolled.
  */
 public class Driver {
-    //final int MIN_DICE = 2;
-    //final int MAX_DICE = 100;
 
     public static void main(String[] args) throws DieNotRolledException {
         int[] input = getInput();
