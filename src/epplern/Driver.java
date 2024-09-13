@@ -214,7 +214,7 @@ public class Driver {
         int maxLocation = -1;
         //attempting to trick checkstyle
         //it doesn't like magic numbers :(
-        int max = maxLocation  - 1;
+        int max = maxLocation - 1;
 
         for (int i = 0; i < rolls.length; ++i) {
             if (max < rolls[i] && rolls[i] != -1) {
