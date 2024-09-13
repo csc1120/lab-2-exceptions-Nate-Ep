@@ -61,10 +61,31 @@ public class Die {
     public void roll() {
         currentValue = random.nextInt(1, numSides + 1);
     }
-    //FIXME remove this method
-    @Override
-    public String toString() {
-        return "Created!";
+
+    /**
+     * gets min number
+     * @return min number
+     */
+    public int getMinNumber() {
+        return minNumber;
     }
+
+    /**
+     *  gets max sides
+     * @return max sides
+     */
+    public int getMaxSides() {
+        return maxSides;
+    }
+
+    /**
+     * gets min sides
+     * @return min sides
+     */
+    public int getMinSides() {
+        return minSides;
+    }
+
+
 
 }
