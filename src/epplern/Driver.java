@@ -75,7 +75,7 @@ public class Driver {
      * @throws IllegalArgumentException thrown exception if a Die is created with bad input
      */
     private static Die[] createDice(int numDice, int numSides) throws IllegalArgumentException {
-        Die die[] = new Die[numDice];
+        Die[] die = new Die[numDice];
 
         for (int i = 0; i < numDice; ++i) {
             die[i] = new Die(numSides);
@@ -94,7 +94,8 @@ public class Driver {
      * @throws DieNotRolledException thrown if attempting to get the current value of a die
      * that hasn't been rolled yet
      */
-    private static int[] rollDice(Die[] dice, int numSides, int numRolls) throws DieNotRolledException {
+    private static int[] rollDice(Die[] dice, int numSides, int numRolls)
+            throws DieNotRolledException {
         //Stores frequency for each side that is rolled
         /*
         Index: 0 1 2 3 4 5 6 7...
