@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class Die {
     final static int MIN_SIDES = 2;
-    final static int MAX_SIDES = 100;
-    final static int MIN_NUMBER = 1;
+    final public static int MAX_SIDES = 100;
+    final public static int MIN_NUMBER = 1;
     private int currentValue;
     private int numSides;
     private Random random = new Random();
