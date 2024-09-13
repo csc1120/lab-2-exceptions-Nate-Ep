@@ -136,14 +136,14 @@ public class Driver {
      * @param max the most frequent number in the frequency array.
      */
     private static void report(int numDice, int[] rolls, int max) {
-        double tenPercent = (numDice * 0) + 0.1;
+        final double TEN_PERCENT = 0.1;
         int[] numRolled = new int[rolls.length];
         int minNum = numDice;
 
         for (int i = 0; i < numRolled.length; ++i) {
             numRolled[i] = minNum + i;
         }
-        double scale = tenPercent * (double)max;
+        double scale = TEN_PERCENT * (double)max;
         double numStars;
         for (int i = 0; i < rolls.length; ++i) {
 
