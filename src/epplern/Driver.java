@@ -199,7 +199,8 @@ public class Driver {
             }
         }
 
-        nextSmallestLocation = findMaxLocation(rolls);
+        int max = -2;
+        nextSmallestLocation = findMaxLocation(rolls, max);
 
         return nextSmallestLocation;
     }
@@ -209,8 +210,8 @@ public class Driver {
      * @param rolls the array of most frequent totals
      * @return maxLocation, the int index of the max location in the given array
      */
-    private static int findMaxLocation(int[] rolls) {
-        int max = -2;
+    private static int findMaxLocation(int[] rolls, int max) {
+
         int maxLocation = -1;
         for (int i = 0; i < rolls.length; ++i) {
             if (max < rolls[i] && rolls[i] != -1) {
