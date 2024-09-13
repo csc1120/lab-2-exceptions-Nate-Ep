@@ -15,9 +15,9 @@ import java.util.Random;
  * the getCurrentValue() method.
  */
 public class Die {
-    final private int MIN_SIDES = 2;
-    final private int MAX_SIDES = 100;
-    final private int MIN_NUMBER = 1;
+    final int minSides = 2;
+    final int maxSides = 100;
+    final int minNumber = 1;
     private int currentValue;
     private int numSides;
     private Random random = new Random();
@@ -30,7 +30,7 @@ public class Die {
      * @throws IllegalArgumentException thrown if too many sides or less than 2 sides
      */
     public Die(int numSides) throws IllegalArgumentException {
-        if (numSides > MAX_SIDES || numSides < MIN_SIDES) {
+        if (numSides > maxSides || numSides < minSides) {
             throw new IllegalArgumentException("Invalid number of sides.");
         } else {
             this.numSides = numSides;
@@ -45,7 +45,7 @@ public class Die {
      * of possible values
      */
     public int getCurrentValue() throws DieNotRolledException {
-        if (currentValue > MAX_SIDES || currentValue < MIN_NUMBER) {
+        if (currentValue > maxSides || currentValue < minNumber) {
             throw new DieNotRolledException("Die not rolled");
         } else {
             int temp = currentValue;
