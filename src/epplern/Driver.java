@@ -78,7 +78,6 @@ public class Driver {
         for (int i = 0; i < numDice; ++i) {
             die[i] = new Die(numSides);
         }
-        System.out.println(die);
         return die;
     }
 
@@ -139,38 +138,18 @@ public class Driver {
      * @param max the most frequent number in the frequency array.
      */
     private static void report(int numDice, int[] rolls, int max) {
-        int maxNumStars = rolls.length;
-        //create parallel array to rolls that stores the number that was rolled
         int[] numRolled = new int[rolls.length];
         int minNum = numDice;
         for (int i = 0; i < numRolled.length; ++i) {
             numRolled[i] = minNum + i;
         }
-
-        //create parallel array to rolls and num rolled that stores the number of *'s to give each
-        //row
-        int[] numStars = new int[rolls.length];
-        //fill in array (you get more stars the greater the frequency
-        int[] used = new int[rolls.length];
-        Arrays.fill(used, -1);
-        int[] copyRolls = new int[rolls.length];
+        double scale = 0.1 * (double)max;
+        double numStars;
         for (int i = 0; i < rolls.length; ++i) {
-            copyRolls[i] = rolls[i];
-        }
 
-        int nextSmallestLocation;
-        for (int i = 0; i < numStars.length; ++i) {
-            nextSmallestLocation = nextSmallest(copyRolls, used);
-            numStars[nextSmallestLocation] = maxNumStars;
-            used[i] = nextSmallestLocation;
-
-            maxNumStars -= 1;
-        }
-
-        for (int i = 0; i < rolls.length; ++i) {
-            //System.out.print(numRolled[i] + " :" + rolls[i] + "    ");
-            System.out.printf("%3d :%-9d", numRolled[i], rolls[i]);
-            for (int j = 0; j < numStars[i]; ++j) {
+            System.out.printf("%-2d:%-9d", numRolled[i], rolls[i]);
+            numStars = ((double)rolls[i] / scale);
+            for (int j = 0; j < (int)numStars; ++j) {
                 System.out.print("*");
             }
             System.out.println();
@@ -178,48 +157,5 @@ public class Driver {
 
     }
 
-    /**
-     * returns the location of the next smallest or the next most frequent roll
-     * @param rolls the frequencies of each total being rolled in an array
-     * @param used an array of what frequency totals have already been used by the program to
-     *             skip those and move to the next most frequent
-     * @return nextSmallestLocation returns the next smallest location or
-     * the next most frequent total
-     */
-    private static int nextSmallest(int[] rolls, int[] used) {
-        int nextSmallestLocation;
 
-        for (int i = 0; i < rolls.length; ++i) {
-            for (int j = 0; j < used.length; ++j) {
-                if (i == used[j]) {
-                    rolls[i] = -1;
-                }
-            }
-        }
-
-        nextSmallestLocation = findMaxLocation(rolls);
-
-        return nextSmallestLocation;
-    }
-
-    /**
-     * Finds the location in the rolls array of the maximum number
-     * @param rolls the array of most frequent totals
-     * @return maxLocation, the int index of the max location in the given array
-     */
-    private static int findMaxLocation(int[] rolls) {
-
-        int maxLocation = -1;
-        //attempting to trick checkstyle
-        //it doesn't like magic numbers :(
-        int max = maxLocation - 1;
-
-        for (int i = 0; i < rolls.length; ++i) {
-            if (max < rolls[i] && rolls[i] != -1) {
-                max = rolls[i];
-                maxLocation = i;
-            }
-        }
-        return maxLocation;
-    }
 }
