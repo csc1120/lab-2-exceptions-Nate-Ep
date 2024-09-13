@@ -15,9 +15,9 @@ import java.util.Random;
  * the getCurrentValue() method.
  */
 public class Die {
-    final static int MIN_SIDES = 2;
-    final public static int MAX_SIDES = 100;
-    final public static int MIN_NUMBER = 1;
+    static final int MIN_SIDES = 2;
+    static final int MAX_SIDES = 100;
+    static final int MIN_NUMBER = 1;
     private int currentValue;
     private int numSides;
     private Random random = new Random();
