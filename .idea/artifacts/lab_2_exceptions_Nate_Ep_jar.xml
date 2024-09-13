@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="lab-2-exceptions-Nate-Ep:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/lab_2_exceptions_Nate_Ep_jar</output-path>
+    <root id="archive" name="lab-2-exceptions-Nate-Ep.jar">
+      <element id="module-output" name="lab-2-exceptions-Nate-Ep" />
+      <element id="dir-copy" path="$PROJECT_DIR$/../../../../Program Files/Java/javafx-sdk-22.0.2/bin" />
+    </root>
+  </artifact>
+</component>
