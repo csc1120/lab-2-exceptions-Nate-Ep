@@ -7,6 +7,10 @@
  */
 package epplern;
 
+/**
+ * This class creates an exception called DieNotRolledException
+ * this is thrown if you try to get the current value of a die and it has not been rolled yet
+ */
 public class DieNotRolledException extends Exception  {
     public DieNotRolledException(String message) {
         super(message);
