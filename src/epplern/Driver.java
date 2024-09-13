@@ -210,8 +210,7 @@ public class Driver {
      * @return maxLocation, the int index of the max location in the given array
      */
     private static int findMaxLocation(int[] rolls) {
-        final int SET_MAX = -2;
-        int max = SET_MAX;
+        int max = -2;
         int maxLocation = -1;
         for (int i = 0; i < rolls.length; ++i) {
             if (max < rolls[i] && rolls[i] != -1) {
