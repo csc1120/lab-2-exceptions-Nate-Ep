@@ -7,8 +7,6 @@
  */
 package epplern;
 
-
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -138,17 +136,19 @@ public class Driver {
      * @param max the most frequent number in the frequency array.
      */
     private static void report(int numDice, int[] rolls, int max) {
+        double tenPercent = 0.1;
         int[] numRolled = new int[rolls.length];
         int minNum = numDice;
+
         for (int i = 0; i < numRolled.length; ++i) {
             numRolled[i] = minNum + i;
         }
-        double scale = 0.1 * (double)max;
+        double scale = tenPercent * (double)max;
         double numStars;
         for (int i = 0; i < rolls.length; ++i) {
 
             System.out.printf("%-2d:%-9d", numRolled[i], rolls[i]);
-            numStars = ((double)rolls[i] / scale);
+            numStars = (double)rolls[i] / scale;
             for (int j = 0; j < (int)numStars; ++j) {
                 System.out.print("*");
             }
