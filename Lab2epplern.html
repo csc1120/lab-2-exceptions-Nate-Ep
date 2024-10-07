@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>epplern</title>
+  </head>
+  <body>
+    <xmp
+>
+# Lab 2 - Exceptions
+
+>> | Earned | Possible | Criteria                                         |
+>> | ------ | -------- | ------------------------------------------------ |
+>> |   15   |    15    | Intermediate Commits                             |
+>> |   60   |    60    | Technical quality (see point deductions in code) |
+>> |   15   |    15    | Coding standard compliance and program clarity   |
+>> |   10   |    10    | Following submission instructions                |
+>
+> # Feedback
+> * Nice work!
+
+
+# Die.java
+
+```
+/*
+ * Course: CSC1020
+ * Lab 2 - Exceptions
+ * Die class
+ * Name: Nathan Eppler
+ * Last Updated: 9/13/24
+ */
+package epplern;
+
+import java.util.Random;
+
+/**
+ *The Die class creates a die that can have 2-100 sides
+ * The die can be rolled, and the current/last rolled value of the die can be obtained by
+ * the getCurrentValue() method.
+ */
+public class Die {
+    static final int MIN_SIDES = 2;
+    static final int MAX_SIDES = 100;
+    static final int MIN_NUMBER = 1;
+    private int currentValue;
+    private int numSides;
+    private Random random = new Random();
+
+    /**
+     * The Die constructor takes in # of sides for the given dice
+     * if the # of sides is > 100 or < 2 then it will throw and exception
+     * otherwise, it will set the number of sides on the die
+     * @param numSides the number of sides on the dice
+     * @throws IllegalArgumentException thrown if too many sides or less than 2 sides
+     */
+    public Die(int numSides) throws IllegalArgumentException {
+        if (numSides > MAX_SIDES || numSides < MIN_SIDES) {
+            throw new IllegalArgumentException("Invalid number of sides.");
+        } else {
+            this.numSides = numSides;
+        }
+    }
+
+    /**
+     * getCurrentValue() returns the value of the last roll, resetting current value to zero
+     * @return currentValue returns the last rolled value of the die
+     * and resets current value to zero
+     * @throws DieNotRolledException thrown if the current value is not in the range
+     * of possible values
+     */
+    public int getCurrentValue() throws DieNotRolledException {
+        if (currentValue > MAX_SIDES || currentValue < MIN_NUMBER) {
+            throw new DieNotRolledException("Die not rolled");
+        } else {
+            int temp = currentValue;
+            currentValue = 0;
+            return temp;
+        }
+    }
+
+    /**
+     * roll() sets currentValue to a random integer in the range of 1 to the number
+     * of sides on the die
+     */
+    public void roll() {
+        currentValue = random.nextInt(1, numSides + 1);
+    }
+
+}
+```
+
+# Driver.java
+
+```
+/*
+ * Course: CSC1020
+ * Lab 2 - Exceptions
+ * Main Driver class
+ * Name: Nathan Eppler
+ * Last Updated: 9/13/24
+ */
+package epplern;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+/**
+ * This class is the driver for the dice program.
+ * This program will ask the user how many dice to roll, the number of times they should be rolled,
+ * and how many sides they should have.
+ * The program then outputs this information in the form of a graph.
+ * The graph shows the frequency of each number rolled.
+ */
+public class Driver {
+
+    public static void main(String[] args) throws DieNotRolledException {
+        int[] input = getInput();
+        Die[] die = createDice(input[0], input[1]);
+        int[] frequency = rollDice(die, input[1], input[2]);
+        int max = findMax(frequency);
+        report(die.length, frequency, max);
+    }
+
+    /**
+     * The get input method gets the input from the user.
+     * It gets the number of dice to roll, the number of sides, and how many rolls to do
+     * @return int[] this returns an array of integers in the order [# dice to roll, # sides,
+     * #rolls to do]
+     */
+```
+> #### Recursive Call in getInput() Method
+> When the input is invalid, you are recalling the method recursively (getInput();). 
+> This can lead to a stack overflow in some situations if invalid input is continuously provided.
+> Instead of calling the method recursively, use a loop to continue asking for input until valid input is provided.
+
+```
+    private static int[] getInput() {
+        String userInput;
+        Scanner scnr = new Scanner(System.in);
+        int[] values = new int[3];
+        int numValues = 0;
+        System.out.print("""
+                Please enter the number of dice to roll, how many sides the dice have,
+                and how many rolls to complete, separating the values by a space.
+                Example: "2 6 1000"
+                
+                Enter configuration:""");
+
+        userInput = scnr.nextLine();
+        Scanner getInts = new Scanner(userInput);
+
+        try {
+            for (int i = 0; i < 3; ++i) {
+                values[i] = getInts.nextInt();
+                ++numValues;
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Invalid input: Expected 3 values but only received " + numValues);
+            //if invalid input, try again by recalling the method.
+            getInput();
+        }
+        getInts.close();
+        scnr.close();
+        return values;
+    }
+
+    /**
+     * The create dice method creates dice objects for each dice that is to be rolled.
+     * @param numDice the number of Die objects to create
+     * @param numSides the number of sides each individual object will have
+     * @return Die[] returns an array of all of the Die objects created
+     * @throws IllegalArgumentException thrown exception if a Die is created with bad input
+     */
+    private static Die[] createDice(int numDice, int numSides) throws IllegalArgumentException {
+        Die[] die = new Die[numDice];
+
+        for (int i = 0; i < numDice; ++i) {
+            die[i] = new Die(numSides);
+        }
+        return die;
+    }
+
+    /**
+     * rollDice is the method used to roll each dice in the Die[] dice array.
+     * This method then calculates and returns in an int[] the frequency of each total.
+     * @param dice all the Die objects created in an array
+     * @param numSides the number of sides each dice has
+     * @param numRolls the number of rolls to complete
+     * @return int[] the frequency of each total when a roll in complete
+     * @throws DieNotRolledException thrown if attempting to get the current value of a die
+     * that hasn't been rolled yet
+     */
+
+```
+> #### Redundant exception thrown
+> This exception may be redundant as the roll() method always ensures that currentValue is updated before being fetched. 
+> Thus, this exception might not occur.
+> You can remove this exception from the method signature unless you want to include custom error handling for unusual cases.
+
+```
+    private static int[] rollDice(Die[] dice, int numSides, int numRolls)
+            throws DieNotRolledException {
+        //Stores frequency for each side that is rolled
+        /*
+        Index: 0 1 2 3 4 5 6 7...
+        Value: 2 3 4 5 6 7 8 9...
+         */
+        int sum = 0;
+        //frequency has as many elements as the number of sides * number of dice - number of dice
+        //This should have the array start at the min number of a die roll and end at the max
+        int[] frequency = new int[((numSides * dice.length) - dice.length) + 1];
+        for (int i = 0; i < numRolls; ++i) {
+            sum = 0;
+            for (Die die : dice) {
+                die.roll();
+                sum += die.getCurrentValue();
+            }
+            //store frequency of each number starting at f[0] which is the lowest possible num
+            //and ending at numSides*dice.length the highest possible num.
+            frequency[sum - dice.length] += 1;
+
+        }
+        return frequency;
+    }
+
+    /**
+     * finds what total was rolled the most frequent
+     * @param rolls the frequency of each total
+     * @return the most frequent total
+     */
+    private static int findMax(int[] rolls) {
+        int max = 0;
+        for (int i = 0; i < rolls.length; ++i) {
+            if (max < rolls[i]) {
+                max = rolls[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * Displays the graph and the frequencies of each total.
+     * @param numDice the total number of dice
+     * @param rolls the frequency array for the rolls
+     * @param max the most frequent number in the frequency array.
+     */
+    private static void report(int numDice, int[] rolls, int max) {
+        final double tenPercent = 0.1;
+        int[] numRolled = new int[rolls.length];
+        int minNum = numDice;
+
+        for (int i = 0; i < numRolled.length; ++i) {
+            numRolled[i] = minNum + i;
+        }
+        double scale = tenPercent * (double)max;
+        double numStars;
+        for (int i = 0; i < rolls.length; ++i) {
+
+            System.out.printf("%-2d:%-9d", numRolled[i], rolls[i]);
+            numStars = (double)rolls[i] / scale;
+            for (int j = 0; j < (int)numStars; ++j) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+
+    }
+
+
+}
+```
+
+</xmp
+    >
+    <script
+      type="text/javascript"
+      src="https://csse.msoe.us/gradedown.js"
+    ></script>
+  </body>
+</html>
